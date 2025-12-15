@@ -40,7 +40,7 @@
 
 > Kafka permet de collecter et stocker des données brutes sous forme d’événements, sans transformation métier, en assurant leur persistance via des offsets.
 
-⚠️ *Techniquement, Kafka peut faire un minimum (Kafka Streams, SMT).*
+⚠️ *Techniquement, Kafka peut faire un minimum de transformation (Kafka Streams, SMT).*
 
 > Il découple les producteurs (capteurs IoT) des consommateurs (Spark), ce qui permet à Spark de consommer les données à son propre rythme, d’absorber des pics de charge, et de reprendre le traitement à partir d’un offset précis en cas d’erreur ou de redémarrage.
 
