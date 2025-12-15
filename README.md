@@ -168,3 +168,85 @@ Offsets
   ↓
 Spark (consumer group + checkpoint)
 ```
+
+# Concurrence
+
+## 🔄 Outils de streaming / traitement de flux
+> (Concurrents de Spark Structured Streaming)
+
+| Outil                                 | Type                  | Points forts                      | Différence clé avec Spark |
+| ------------------------------------- | --------------------- | --------------------------------- | ------------------------- |
+| **Apache Spark Structured Streaming** | Micro-batch streaming | Robuste, SQL, batch + streaming   | Latence > Flink           |
+| **Apache Flink**                      | Streaming natif       | Vrai streaming, event-time avancé | Plus complexe à opérer    |
+| **Apache Beam**                       | SDK unifié            | Portabilité multi-engines         | Pas un moteur             |
+| **Kafka Streams**                     | Lib Java              | Léger, intégré Kafka              | Pas distribué seul        |
+| **ksqlDB**                            | Streaming SQL         | SQL temps réel                    | Cas d’usage limités       |
+| **Apache Storm**                      | Streaming bas niveau  | Très faible latence               | Ancien, verbeux           |
+| **Serverless streaming**              | Event-driven          | Scalabilité auto                  | Dépendance cloud          |
+
+## 📨 Message brokers / Pub-Sub
+> (Concurrents de Kafka)
+
+| Outil                | Type              | Points forts                 | Différence clé avec Kafka    |
+| -------------------- | ----------------- | ---------------------------- | ---------------------------- |
+| **Apache Kafka**     | Log distribué     | Replay, débit massif         | Complexité infra             |
+| **Apache Pulsar**    | Pub-Sub distribué | Multi-tenant, storage séparé | Moins répandu                |
+| **RabbitMQ**         | Message Queue     | Routing avancé               | Pas conçu pour replay massif |
+| **AWS Kinesis**      | Streaming managé  | Intégré AWS                  | Cloud only                   |
+| **Google Pub/Sub**   | Pub-Sub managé    | Scalabilité auto             | Pas d’on-prem                |
+| **Azure Event Hubs** | Event streaming   | Équivalent Kafka Azure       | Azure only                   |
+| **Redis Streams**    | Streams mémoire   | Faible latence               | Rétention limitée            |
+
+## 📦 Ingestion / orchestration / pipelines
+> (Complément au streaming)
+
+| Outil              | Rôle                  | Usage principal  |
+| ------------------ | --------------------- | ---------------- |
+| **Apache NiFi**    | Ingestion visuelle    | Routage de flux  |
+| **Apache Airflow** | Orchestration batch   | ETL planifiés    |
+| **Prefect**        | Orchestration moderne | Pipelines Python |
+| **Dagster**        | Data orchestration    | Data-centric     |
+| **dbt**            | Transformation SQL    | ELT analytique   |
+
+## 📊 Analytique temps réel / stockage
+> (Consommateurs de flux)
+
+| Outil             | Type               | Usage                |
+| ----------------- | ------------------ | -------------------- |
+| **ClickHouse**    | OLAP               | Analytique rapide    |
+| **Apache Druid**  | OLAP temps réel    | Dashboards           |
+| **Apache Pinot**  | OLAP streaming     | Requêtes low-latency |
+| **Elasticsearch** | Search + analytics | Logs & métriques     |
+| **Materialize**   | Streaming SQL      | Vues temps réel      |
+
+
+## 🧠 Aide mémoire
+
+| Besoin                  | Outils typiques     |
+| ----------------------- | ------------------- |
+| *Message broker*        | Kafka, Pulsar       |
+| *Streaming compute*     | Spark, Flink        |
+| *Streaming SQL*         | ksqlDB, Materialize |
+| *Orchestration*         | Airflow, Prefect    |
+| *Analytique temps réel* | ClickHouse, Druid   |
+
+```
+               +--------------------+
+               | Streaming compute  |
+               | (traitement)       |
+               | Spark / Flink /    |
+               | Kafka Streams      |
+               +---------+----------+
+                         |
+            +------------+---------------+
+            |       Message brokers      |
+            | Kafka / Pulsar / RabbitMQ  |
+            | Kinesis / PubSub / Redis   |
+            +------------+---------------+
+                         |
+         +---------------+--------------------+
+         |  Stockage / Analytique temps réel  |
+         | ClickHouse / Druid / Elasticsearch |
+         +------------------------------------+
+
+```
