@@ -1,5 +1,39 @@
 # Analyse de flux de données en temps réel avec Spark Structured Streaming
 
+# Sommaire
+
+- [Analyse de flux de données en temps réel avec Spark Structured Streaming](#analyse-de-flux-de-données-en-temps-réel-avec-spark-structured-streaming)
+- [Apache Kafka / Apache Spark](#apache-kafka--apache-spark)
+  - [Définitions](#définitions)
+    - [on-premise](#on-premise)
+    - [Apache Kafka](#apache-kafka)
+    - [Apache Spark](#apache-spark)
+  - [À retenir](#à-retenir)
+  - [Quel problème Kafka résout que Spark seul ne résout pas bien ?](#quel-problème-kafka-résout-que-spark-seul-ne-résout-pas-bien-)
+    - [Développement](#développement)
+- [Workflow](#workflow)
+- [Vocabulaire clé (Kafka / Spark Streaming)](#vocabulaire-clé-kafka--spark-streaming)
+  - [Endpoint](#endpoint)
+  - [Partition (Kafka)](#partition-kafka)
+  - [Offset (Kafka)](#offset-kafka)
+  - [Producer](#producer)
+  - [Consumer](#consumer)
+  - [Topic](#topic)
+  - [Log (Kafka log)](#log-kafka-log)
+  - [Append](#append)
+  - [Read](#read)
+  - [Replay](#replay)
+  - [Consumer Group](#consumer-group)
+  - [Commit d’offset](#commit-doffset)
+  - [Endpoint Kafka vs Topic](#endpoint-kafka-vs-topic)
+  - [Mini-schéma mental (à garder en tête)](#mini-schéma-mental-à-garder-en-tête)
+- [Concurrence](#concurrence)
+  - [Outils de streaming / traitement de flux](#outils-de-streaming--traitement-de-flux)
+  - [Message brokers / Pub-Sub](#message-brokers--pub-sub)
+  - [Ingestion / orchestration / pipelines](#ingestion--orchestration--pipelines)
+  - [Analytique temps réel / stockage](#analytique-temps-réel--stockage)
+  - [Aide mémoire](#aide-mémoire)
+
 # Apache Kafka / Apache Spark
 
 ## Définitions
