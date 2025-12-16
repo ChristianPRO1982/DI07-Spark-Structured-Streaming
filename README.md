@@ -124,6 +124,75 @@ Chaque partition **a sa propre suite d’offsets**.
 * physiquement : stocké avec le message dans le log Kafka
 * ce n’est pas le message, juste son index
 
+## Producer
+
+> 👉 Un producer est une application qui envoie des messages à Kafka.
+
+**ex :** capteur IoT, simulateur, application backend
+
+**rôle :** écrire des événements dans un topic
+
+> 👉 Kafka produit = des producers écrivent dans Kafka
+
+## Consumer
+
+> 👉 Un consumer est une application qui lit des messages depuis Kafka.
+
+**ex :** Spark Structured Streaming
+
+**rôle :** lire les événements d’un topic
+
+> 👉 Kafka consomme = des consumers lisent depuis Kafka
+
+## Topic
+
+> 👉 Un topic est un canal logique de messages dans Kafka.
+
+comparable à un flux nommé
+
+**ex :** iot_sensor_data
+
+> 👉 Un topic contient des partitions, pas des messages directement.
+
+## Log (Kafka log)
+
+> 👉 Le log Kafka est une structure de stockage append-only.
+
+Les messages sont ajoutés à la fin. Jamais modifiés ni supprimés immédiatement. Organisés par partitions
+
+> 👉 Quand tu dis :
+
+Kafka écrit dans le log d’un topic. En réalité : Kafka ajoute des messages à la fin du log de chaque partition du topic.
+
+## Append
+
+> 👉 Append = ajouter à la fin.
+
+Dans Kafka :
+* on ne fait que append
+* pas de update
+* pas de delete immédiat
+
+C’est ce qui rend Kafka :
+* simple,
+* performant,
+* rejouable.
+
+## Read
+
+> 👉 Read = lire des messages à partir d’un offset donné.
+
+Un consumer lit séquentiellement. Respecte l’ordre de la partition. Peut s’arrêter / reprendre.
+
+## Replay
+
+> 👉 Replay = relire des messages déjà lus.
+
+Possible parce que :
+* Kafka conserve les messages
+* les offsets sont stockés séparément
+* le consumer peut repartir d’un offset plus ancien
+
 ## Consumer Group
 
 > 👉 Un consumer group est un groupe logique de consommateurs qui se partagent les partitions d’un topic.
@@ -263,95 +332,7 @@ nouveau vocabulaire à mettre dans la fiche :
 
 
 Vocabulaire Kafka — minimum vital
-Producer
 
-👉 Un producer est une application qui envoie des messages à Kafka.
-
-ex : capteur IoT, simulateur, application backend
-
-rôle : écrire des événements dans un topic
-
-👉 Kafka produit = des producers écrivent dans Kafka
-
-Consumer
-
-👉 Un consumer est une application qui lit des messages depuis Kafka.
-
-ex : Spark Structured Streaming
-
-rôle : lire les événements d’un topic
-
-👉 Kafka consomme = des consumers lisent depuis Kafka
-
-Topic
-
-👉 Un topic est un canal logique de messages dans Kafka.
-
-comparable à un flux nommé
-
-ex : iot_sensor_data
-
-👉 Un topic contient des partitions, pas des messages directement.
-
-Log (Kafka log)
-
-👉 Le log Kafka est une structure de stockage append-only.
-
-les messages sont ajoutés à la fin
-
-jamais modifiés ni supprimés immédiatement
-
-organisés par partitions
-
-👉 Quand tu dis :
-
-Kafka écrit dans le log d’un topic
-
-tu dis en réalité :
-
-Kafka ajoute des messages à la fin du log de chaque partition du topic.
-
-Append
-
-👉 Append = ajouter à la fin.
-
-Dans Kafka :
-
-on ne fait que append
-
-pas de update
-
-pas de delete immédiat
-
-C’est ce qui rend Kafka :
-
-simple,
-
-performant,
-
-rejouable.
-
-Read
-
-👉 Read = lire des messages à partir d’un offset donné.
-
-un consumer lit séquentiellement
-
-respecte l’ordre de la partition
-
-peut s’arrêter / reprendre
-
-Replay
-
-👉 Replay = relire des messages déjà lus.
-
-Possible parce que :
-
-Kafka conserve les messages
-
-les offsets sont stockés séparément
-
-le consumer peut repartir d’un offset plus ancien
 
 👉 Très utile pour :
 
