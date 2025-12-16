@@ -325,19 +325,3 @@ nouveau vocabulaire à mettre dans la fiche :
 * Kafka produit (producer) / consomme (consumer)
 * Kafka écrit dans le log d’un topic (append)
 * Le consumer lit / relit des messages (read / replay)
-
-
-
-
-
-
-Vocabulaire Kafka — minimum vital
-
-
-👉 Très utile pour :
-
-debug,
-
-reprocessing,
-
-nouveaux consommateurs.
