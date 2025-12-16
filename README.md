@@ -1,14 +1,14 @@
 # Analyse de flux de données en temps réel avec Spark Structured Streaming
 
-# Sommaire
+<details>
+  <summary><strong>📌 Sommaire</strong></summary>
 
-- [Analyse de flux de données en temps réel avec Spark Structured Streaming](#analyse-de-flux-de-données-en-temps-réel-avec-spark-structured-streaming)
 - [Apache Kafka / Apache Spark](#apache-kafka--apache-spark)
   - [Définitions](#définitions)
     - [on-premise](#on-premise)
     - [Apache Kafka](#apache-kafka)
     - [Apache Spark](#apache-spark)
-  - [À retenir](#à-retenir)
+  - [À retenir](#a-retenir)
   - [Quel problème Kafka résout que Spark seul ne résout pas bien ?](#quel-problème-kafka-résout-que-spark-seul-ne-résout-pas-bien-)
     - [Développement](#développement)
 - [Workflow](#workflow)
@@ -28,11 +28,13 @@
   - [Endpoint Kafka vs Topic](#endpoint-kafka-vs-topic)
   - [Mini-schéma mental (à garder en tête)](#mini-schéma-mental-à-garder-en-tête)
 - [Concurrence](#concurrence)
-  - [Outils de streaming / traitement de flux](#outils-de-streaming--traitement-de-flux)
-  - [Message brokers / Pub-Sub](#message-brokers--pub-sub)
-  - [Ingestion / orchestration / pipelines](#ingestion--orchestration--pipelines)
-  - [Analytique temps réel / stockage](#analytique-temps-réel--stockage)
-  - [Aide mémoire](#aide-mémoire)
+  - [Outils de streaming / traitement de flux](#-outils-de-streaming--traitement-de-flux)
+  - [Message brokers / Pub-Sub](#-message-brokers--pub-sub)
+  - [Ingestion / orchestration / pipelines](#-ingestion--orchestration--pipelines)
+  - [Analytique temps réel / stockage](#-analytique-temps-réel--stockage)
+  - [Aide mémoire](#-aide-mémoire)
+
+</details>
 
 # Apache Kafka / Apache Spark
 
@@ -45,11 +47,15 @@
 
 > 👉 on-premise = où ça tourne, et qui gère l’infrastructure (hardware, réseau, sécurité, déploiement).
 
+[Top](#)
+
 ### Apache Kafka
 
 * `Kafka = log d’événements + découplage + relecture`
 * `Kafka ≠ queue / trigger`
 > une couche de streaming qui collecte/stocke/rejoue des événements, et permet à Spark (ou d’autres) de consommer en continu, de façon scalable et fiable
+
+[Top](#)
 
 ### Apache Spark
 
@@ -58,17 +64,28 @@
 
 *l’API n’est qu’une façade d’un moteur distribué.*
 
+[Top](#)
+
 ## A retenir
 
 > Spark Structured Streaming fournit une API temps réel basée sur un modèle micro-batch, garantissant cohérence et tolérance aux pannes.
 
 > Kafka organise les données par topics découpés en partitions, dans lesquelles les messages sont identifiés par des offsets, tandis que Spark consomme ces offsets via un consumer group en assurant la reprise grâce aux checkpoints.
 
+Avec le vocabulaire :
+* Kafka produit (producer) / consomme (consumer)
+* Kafka écrit dans le log d’un topic (append)
+* Le consumer lit / relit des messages (read / replay)
+
+[Top](#)
+
 ## Quel problème Kafka résout que Spark seul ne résout pas bien ?
 
 > Kafka apporte une couche de découplage et de persistance des flux qui permet à Spark de traiter des données en continu de manière fiable, scalable et tolérante aux pannes, en absorbant les pics de charge et en permettant la reprise du traitement à partir d’un offset précis.
 
 > **Kafka garantit la disponibilité des événements, Spark garantit la cohérence du traitement.**
+
+[Top](#)
 
 ### développement
 
@@ -96,11 +113,16 @@
   * il les gère automatiquement via les consumer groups + checkpoints,
   * mais ton raisonnement reste correct conceptuellement.
 
+[Top](#)
+
 # Workflow
 
 **capteurs → Kafka → Spark**
 
 # Vocabulaire clé (Kafka / Spark Streaming)
+
+[Top](#)
+
 ## Endpoint
 > 👉 Un endpoint est un point d’accès réseau à un service.
 
@@ -111,6 +133,8 @@ Dans le contexte du brief :
 
 > 👉 **À retenir :**
 Un endpoint ne fait rien tout seul : c’est l’adresse où un service est joignable.
+
+[Top](#)
 
 ## Partition (Kafka)
 > 👉 Une partition est une sous-partie ordonnée d’un topic Kafka.
@@ -127,6 +151,8 @@ Un endpoint ne fait rien tout seul : c’est l’adresse où un service est joig
 
 > 👉 **Règle clé :**
 L’ordre n’est garanti que dans une partition, jamais entre partitions.
+
+[Top](#)
 
 ## Offset (Kafka)
 
@@ -158,6 +184,8 @@ Chaque partition **a sa propre suite d’offsets**.
 * physiquement : stocké avec le message dans le log Kafka
 * ce n’est pas le message, juste son index
 
+[Top](#)
+
 ## Producer
 
 > 👉 Un producer est une application qui envoie des messages à Kafka.
@@ -167,6 +195,8 @@ Chaque partition **a sa propre suite d’offsets**.
 **rôle :** écrire des événements dans un topic
 
 > 👉 Kafka produit = des producers écrivent dans Kafka
+
+[Top](#)
 
 ## Consumer
 
@@ -178,6 +208,8 @@ Chaque partition **a sa propre suite d’offsets**.
 
 > 👉 Kafka consomme = des consumers lisent depuis Kafka
 
+[Top](#)
+
 ## Topic
 
 > 👉 Un topic est un canal logique de messages dans Kafka.
@@ -188,6 +220,8 @@ comparable à un flux nommé
 
 > 👉 Un topic contient des partitions, pas des messages directement.
 
+[Top](#)
+
 ## Log (Kafka log)
 
 > 👉 Le log Kafka est une structure de stockage append-only.
@@ -197,6 +231,8 @@ Les messages sont ajoutés à la fin. Jamais modifiés ni supprimés immédiatem
 > 👉 Quand tu dis :
 
 Kafka écrit dans le log d’un topic. En réalité : Kafka ajoute des messages à la fin du log de chaque partition du topic.
+
+[Top](#)
 
 ## Append
 
@@ -212,11 +248,15 @@ C’est ce qui rend Kafka :
 * performant,
 * rejouable.
 
+[Top](#)
+
 ## Read
 
 > 👉 Read = lire des messages à partir d’un offset donné.
 
 Un consumer lit séquentiellement. Respecte l’ordre de la partition. Peut s’arrêter / reprendre.
+
+[Top](#)
 
 ## Replay
 
@@ -226,6 +266,8 @@ Possible parce que :
 * Kafka conserve les messages
 * les offsets sont stockés séparément
 * le consumer peut repartir d’un offset plus ancien
+
+[Top](#)
 
 ## Consumer Group
 
@@ -239,6 +281,8 @@ Possible parce que :
 
 Spark Structured Streaming **= un consumer group Kafka**.
 
+[Top](#)
+
 ## Commit d’offset
 
 > 👉 Committer un offset = dire “j’ai traité jusqu’ici”.
@@ -250,6 +294,8 @@ Spark Structured Streaming **= un consumer group Kafka**.
 
 > 👉 Si Spark plante avant commit → les messages sont relus.
 
+[Top](#)
+
 ## Endpoint Kafka vs Topic
 
 Petit piège classique :
@@ -257,7 +303,9 @@ Petit piège classique :
 * Endpoint = où se connecter (localhost:9092)
 * Topic = quoi lire/écrire (iot_sensor_data)
 
-## Mini-schéma mental (à garder en tête)
+[Top](#)
+
+# Mini-schéma mental (à garder en tête)
 ```
 Capteur
   ↓
@@ -271,6 +319,8 @@ Offsets
   ↓
 Spark (consumer group + checkpoint)
 ```
+
+[Top](#)
 
 # Concurrence
 
@@ -287,6 +337,8 @@ Spark (consumer group + checkpoint)
 | **Apache Storm**                      | Streaming bas niveau  | Très faible latence               | Ancien, verbeux           |
 | **Serverless streaming**              | Event-driven          | Scalabilité auto                  | Dépendance cloud          |
 
+[Top](#)
+
 ## 📨 Message brokers / Pub-Sub
 > (Concurrents de Kafka)
 
@@ -300,6 +352,8 @@ Spark (consumer group + checkpoint)
 | **Azure Event Hubs** | Event streaming   | Équivalent Kafka Azure       | Azure only                   |
 | **Redis Streams**    | Streams mémoire   | Faible latence               | Rétention limitée            |
 
+[Top](#)
+
 ## 📦 Ingestion / orchestration / pipelines
 > (Complément au streaming)
 
@@ -310,6 +364,8 @@ Spark (consumer group + checkpoint)
 | **Prefect**        | Orchestration moderne | Pipelines Python |
 | **Dagster**        | Data orchestration    | Data-centric     |
 | **dbt**            | Transformation SQL    | ELT analytique   |
+
+[Top](#)
 
 ## 📊 Analytique temps réel / stockage
 > (Consommateurs de flux)
@@ -322,6 +378,8 @@ Spark (consumer group + checkpoint)
 | **Elasticsearch** | Search + analytics | Logs & métriques     |
 | **Materialize**   | Streaming SQL      | Vues temps réel      |
 
+[Top](#)
+
 
 ## 🧠 Aide mémoire
 
@@ -332,6 +390,8 @@ Spark (consumer group + checkpoint)
 | *Streaming SQL*         | ksqlDB, Materialize |
 | *Orchestration*         | Airflow, Prefect    |
 | *Analytique temps réel* | ClickHouse, Druid   |
+
+[Top](#)
 
 ```
                +--------------------+
@@ -354,8 +414,4 @@ Spark (consumer group + checkpoint)
 
 ```
 
-
-nouveau vocabulaire à mettre dans la fiche :
-* Kafka produit (producer) / consomme (consumer)
-* Kafka écrit dans le log d’un topic (append)
-* Le consumer lit / relit des messages (read / replay)
+[Top](#)
