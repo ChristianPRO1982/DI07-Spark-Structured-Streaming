@@ -32,8 +32,17 @@ tree -I 'chris|jeux_de_donnees'
 sudo chown -R $USER:$USER data
 chmod -R u+rwX data
 
+chmod -R a+rwX data
+mkdir -p data/checkpoints/silver_sensor_data_kafka
+chmod -R a+rwX data/checkpoints
+
 chmod +x scripts/iot_reset_all.sh
 ./scripts/iot_reset_all.sh
+
+docker compose up -d kafka kafka-ui
+docker exec -it kafka kafka-topics --bootstrap-server kafka:9092 \
+  --create --if-not-exists --topic iot_sensor --partitions 3 --replication-factor 1
+docker exec -it kafka kafka-topics --bootstrap-server kafka:9092 --list
 
 ```
 
@@ -44,3 +53,13 @@ chmod +x scripts/iot_reset_all.sh
 | Debug / audit           | ✅ batch        |
 | Contrôles qualité       | ✅ batch        |
 | Exploration             | ✅ batch        |
+
+Étape unique — Relancer un worker Spark (indispensable)
+```
+docker exec -d spark /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker \
+  spark://localhost:7077 \
+  --cores 2 \
+  --memory 2g \
+  --webui-port 8082
+
+```
