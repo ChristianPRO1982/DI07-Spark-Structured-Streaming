@@ -25,23 +25,18 @@ def build_spark(app_name: str) -> SparkSession:
 
 def build_sample_df(spark: SparkSession):
     """Create a small deterministic DataFrame for a Delta write/read smoke test."""
-    schema = T.StructType(
-        [
-            T.StructField("sensor_id", T.StringType(), False),
-            T.StructField("temperature", T.DoubleType(), False),
-            T.StructField("humidity", T.DoubleType(), False),
-            T.StructField("event_time", T.TimestampType(), False),
-        ]
-    )
-
     rows: List[Tuple[str, float, float, str]] = [
         ("S-001", 21.5, 45.2, "2025-12-17 09:00:00"),
         ("S-002", 27.1, 38.7, "2025-12-17 09:00:02"),
         ("S-001", 22.0, 44.9, "2025-12-17 09:00:05"),
     ]
 
-    df = spark.createDataFrame(rows, schema=schema)
-    return df.withColumn("day", F.to_date("event_time"))
+    df = spark.createDataFrame(rows, ["sensor_id", "temperature", "humidity", "event_time"])
+
+    return (
+        df.withColumn("event_time", F.to_timestamp("event_time", "yyyy-MM-dd HH:mm:ss"))
+        .withColumn("day", F.to_date("event_time"))
+    )
 
 
 def write_delta(df, output_path: str) -> None:
