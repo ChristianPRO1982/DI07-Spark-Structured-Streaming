@@ -1,5 +1,13 @@
 chris/
-
+data/
+# Streaming simulation folders (generated)
+jeux_de_donnees/init/
+jeux_de_donnees/landing/
+# Checkpoints / Spark
+**/checkpoints/
+**/_spark_metadata/
+# OS
+EOF
 
 
 
