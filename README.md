@@ -47,7 +47,7 @@
 
 > 👉 on-premise = où ça tourne, et qui gère l’infrastructure (hardware, réseau, sécurité, déploiement).
 
-[Top](#)
+[Top](#top)
 
 ### Apache Kafka
 
@@ -55,7 +55,7 @@
 * `Kafka ≠ queue / trigger`
 > une couche de streaming qui collecte/stocke/rejoue des événements, et permet à Spark (ou d’autres) de consommer en continu, de façon scalable et fiable
 
-[Top](#)
+[Top](#top)
 
 ### Apache Spark
 
@@ -64,7 +64,7 @@
 
 *l’API n’est qu’une façade d’un moteur distribué.*
 
-[Top](#)
+[Top](#top)
 
 ## A retenir
 
@@ -86,7 +86,7 @@ ce que l'on peut faire dans bronze :
 | Contrôles qualité       | ✅ batch        |
 | Exploration             | ✅ batch        |
 
-[Top](#)
+[Top](#top)
 
 ## Quel problème Kafka résout que Spark seul ne résout pas bien ?
 
@@ -94,7 +94,7 @@ ce que l'on peut faire dans bronze :
 
 > **Kafka garantit la disponibilité des événements, Spark garantit la cohérence du traitement.**
 
-[Top](#)
+[Top](#top)
 
 ### développement
 
@@ -122,7 +122,7 @@ ce que l'on peut faire dans bronze :
   * il les gère automatiquement via les consumer groups + checkpoints,
   * mais ton raisonnement reste correct conceptuellement.
 
-[Top](#)
+[Top](#top)
 
 # Workflow
 
@@ -130,7 +130,7 @@ ce que l'on peut faire dans bronze :
 
 # Vocabulaire clé (Kafka / Spark Streaming)
 
-[Top](#)
+[Top](#top)
 
 ## Endpoint
 > 👉 Un endpoint est un point d’accès réseau à un service.
@@ -143,7 +143,7 @@ Dans le contexte du brief :
 > 👉 **À retenir :**
 Un endpoint ne fait rien tout seul : c’est l’adresse où un service est joignable.
 
-[Top](#)
+[Top](#top)
 
 ## Partition (Kafka)
 > 👉 Une partition est une sous-partie ordonnée d’un topic Kafka.
@@ -161,7 +161,7 @@ Un endpoint ne fait rien tout seul : c’est l’adresse où un service est joig
 > 👉 **Règle clé :**
 L’ordre n’est garanti que dans une partition, jamais entre partitions.
 
-[Top](#)
+[Top](#top)
 
 ## Offset (Kafka)
 
@@ -193,7 +193,7 @@ Chaque partition **a sa propre suite d’offsets**.
 * physiquement : stocké avec le message dans le log Kafka
 * ce n’est pas le message, juste son index
 
-[Top](#)
+[Top](#top)
 
 ## Producer
 
@@ -205,7 +205,7 @@ Chaque partition **a sa propre suite d’offsets**.
 
 > 👉 Kafka produit = des producers écrivent dans Kafka
 
-[Top](#)
+[Top](#top)
 
 ## Consumer
 
@@ -217,7 +217,7 @@ Chaque partition **a sa propre suite d’offsets**.
 
 > 👉 Kafka consomme = des consumers lisent depuis Kafka
 
-[Top](#)
+[Top](#top)
 
 ## Topic
 
@@ -229,7 +229,7 @@ comparable à un flux nommé
 
 > 👉 Un topic contient des partitions, pas des messages directement.
 
-[Top](#)
+[Top](#top)
 
 ## Log (Kafka log)
 
@@ -241,7 +241,7 @@ Les messages sont ajoutés à la fin. Jamais modifiés ni supprimés immédiatem
 
 Kafka écrit dans le log d’un topic. En réalité : Kafka ajoute des messages à la fin du log de chaque partition du topic.
 
-[Top](#)
+[Top](#top)
 
 ## Append
 
@@ -257,7 +257,7 @@ C’est ce qui rend Kafka :
 * performant,
 * rejouable.
 
-[Top](#)
+[Top](#top)
 
 ## Read
 
@@ -265,7 +265,7 @@ C’est ce qui rend Kafka :
 
 Un consumer lit séquentiellement. Respecte l’ordre de la partition. Peut s’arrêter / reprendre.
 
-[Top](#)
+[Top](#top)
 
 ## Replay
 
@@ -276,7 +276,7 @@ Possible parce que :
 * les offsets sont stockés séparément
 * le consumer peut repartir d’un offset plus ancien
 
-[Top](#)
+[Top](#top)
 
 ## Consumer Group
 
@@ -290,7 +290,7 @@ Possible parce que :
 
 Spark Structured Streaming **= un consumer group Kafka**.
 
-[Top](#)
+[Top](#top)
 
 ## Commit d’offset
 
@@ -303,7 +303,7 @@ Spark Structured Streaming **= un consumer group Kafka**.
 
 > 👉 Si Spark plante avant commit → les messages sont relus.
 
-[Top](#)
+[Top](#top)
 
 ## Endpoint Kafka vs Topic
 
@@ -312,7 +312,7 @@ Petit piège classique :
 * Endpoint = où se connecter (localhost:9092)
 * Topic = quoi lire/écrire (iot_sensor_data)
 
-[Top](#)
+[Top](#top)
 
 # Mini-schéma mental (à garder en tête)
 ```
@@ -329,7 +329,7 @@ Offsets
 Spark (consumer group + checkpoint)
 ```
 
-[Top](#)
+[Top](#top)
 
 # Concurrence
 
@@ -346,7 +346,7 @@ Spark (consumer group + checkpoint)
 | **Apache Storm**                      | Streaming bas niveau  | Très faible latence               | Ancien, verbeux           |
 | **Serverless streaming**              | Event-driven          | Scalabilité auto                  | Dépendance cloud          |
 
-[Top](#)
+[Top](#top)
 
 ## 📨 Message brokers / Pub-Sub
 > (Concurrents de Kafka)
@@ -361,7 +361,7 @@ Spark (consumer group + checkpoint)
 | **Azure Event Hubs** | Event streaming   | Équivalent Kafka Azure       | Azure only                   |
 | **Redis Streams**    | Streams mémoire   | Faible latence               | Rétention limitée            |
 
-[Top](#)
+[Top](#top)
 
 ## 📦 Ingestion / orchestration / pipelines
 > (Complément au streaming)
@@ -374,7 +374,7 @@ Spark (consumer group + checkpoint)
 | **Dagster**        | Data orchestration    | Data-centric     |
 | **dbt**            | Transformation SQL    | ELT analytique   |
 
-[Top](#)
+[Top](#top)
 
 ## 📊 Analytique temps réel / stockage
 > (Consommateurs de flux)
@@ -387,7 +387,7 @@ Spark (consumer group + checkpoint)
 | **Elasticsearch** | Search + analytics | Logs & métriques     |
 | **Materialize**   | Streaming SQL      | Vues temps réel      |
 
-[Top](#)
+[Top](#top)
 
 
 ## 🧠 Aide mémoire
@@ -400,7 +400,7 @@ Spark (consumer group + checkpoint)
 | *Orchestration*         | Airflow, Prefect    |
 | *Analytique temps réel* | ClickHouse, Druid   |
 
-[Top](#)
+[Top](#top)
 
 ```
                +--------------------+
@@ -423,4 +423,4 @@ Spark (consumer group + checkpoint)
 
 ```
 
-[Top](#)
+[Top](#top)
