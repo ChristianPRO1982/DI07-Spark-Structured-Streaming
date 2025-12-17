@@ -77,6 +77,15 @@ Avec le vocabulaire :
 * Kafka écrit dans le log d’un topic (append)
 * Le consumer lit / relit des messages (read / replay)
 
+ce que l'on peut faire dans bronze :
+| Usage                   | Lecture Bronze |
+| ----------------------- | -------------- |
+| Pipeline temps réel     | ✅ stream       |
+| Reprocessing / backfill | ✅ batch        |
+| Debug / audit           | ✅ batch        |
+| Contrôles qualité       | ✅ batch        |
+| Exploration             | ✅ batch        |
+
 [Top](#)
 
 ## Quel problème Kafka résout que Spark seul ne résout pas bien ?

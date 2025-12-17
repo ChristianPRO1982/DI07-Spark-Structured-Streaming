@@ -27,8 +27,20 @@ tree -I 'chris|jeux_de_donnees'
 9 directories, 11 files
 ```
 
-## donner les droits pour `data/`
+## bash
 ```bash
 sudo chown -R $USER:$USER data
 chmod -R u+rwX data
+
+chmod +x scripts/iot_reset_all.sh
+./scripts/iot_reset_all.sh
+
 ```
+
+| Usage                   | Lecture Bronze |
+| ----------------------- | -------------- |
+| Pipeline temps réel     | ✅ stream       |
+| Reprocessing / backfill | ✅ batch        |
+| Debug / audit           | ✅ batch        |
+| Contrôles qualité       | ✅ batch        |
+| Exploration             | ✅ batch        |
