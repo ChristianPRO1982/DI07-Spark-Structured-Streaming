@@ -49,7 +49,6 @@ def ensure_empty_dir(path: Path) -> None:
             shutil.rmtree(item)
 
 
-
 def copy_dataset(cfg: InitConfig) -> int:
     """Copy dataset files from source to init."""
     files = sorted(cfg.source_dir.glob(cfg.pattern))
