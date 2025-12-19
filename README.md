@@ -4,12 +4,6 @@
 
 [Veille (doc MD sur GitHub)](https://github.com/ChristianPRO1982/DI07-Spark-Structured-Streaming/blob/main/01-veille-kafka-spark.md)
 
-## préparation de l'environnement
-
-```bash
-
-```
-
 ## lancer docker compose
 ```bash
 docker-compose up -d
